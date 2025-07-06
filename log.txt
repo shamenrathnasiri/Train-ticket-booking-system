@@ -1,0 +1,97 @@
+2025-07-06 01:13:13.351 +05:30 [INF] This only goes file...
+2025-07-06 01:13:13.547 +05:30 [INF] Foo
+2025-07-06 01:13:13.624 +05:30 [DBG] Finding descriptors for initialize
+2025-07-06 01:13:13.785 +05:30 [DBG] Queueing "Serial":initialize:0 request for processing
+2025-07-06 01:13:13.842 +05:30 [DBG] Starting: Processing request initialize 0
+2025-07-06 01:13:13.843 +05:30 [DBG] Starting: Routing Request (0) initialize
+2025-07-06 01:13:13.846 +05:30 [VRB] Converting params for Request (0) initialize to OmniSharp.Extensions.LanguageServer.Protocol.Models.InternalInitializeParams
+2025-07-06 01:13:13.846 +05:30 [VRB] Converting params for Notification initialize to OmniSharp.Extensions.LanguageServer.Protocol.Models.InternalInitializeParams
+2025-07-06 01:13:14.373 +05:30 [VRB] Could not write to output handler, perhaps serialization failed?
+System.Threading.Channels.ChannelClosedException: The channel has been closed.
+   at System.Threading.Channels.AsyncOperation`1.GetResult(Int16 token)
+   at OmniSharp.Extensions.JsonRpc.OutputHandler.ProcessOutputStream(CancellationToken cancellationToken)
+2025-07-06 01:13:14.434 +05:30 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.InitializeResult
+2025-07-06 01:13:14.436 +05:30 [DBG] Finished: Routing Request (0) initialize in 592ms
+2025-07-06 01:13:14.437 +05:30 [DBG] Finished: Processing request initialize 0 in 594ms
+2025-07-06 08:36:18.017 +05:30 [INF] This only goes file...
+2025-07-06 08:36:18.818 +05:30 [INF] Foo
+2025-07-06 08:36:18.895 +05:30 [DBG] Finding descriptors for initialize
+2025-07-06 08:36:19.146 +05:30 [DBG] Queueing "Serial":initialize:0 request for processing
+2025-07-06 08:36:19.165 +05:30 [DBG] Starting: Processing request initialize 0
+2025-07-06 08:36:19.166 +05:30 [DBG] Starting: Routing Request (0) initialize
+2025-07-06 08:36:19.171 +05:30 [VRB] Converting params for Request (0) initialize to OmniSharp.Extensions.LanguageServer.Protocol.Models.InternalInitializeParams
+2025-07-06 08:36:19.171 +05:30 [VRB] Converting params for Notification initialize to OmniSharp.Extensions.LanguageServer.Protocol.Models.InternalInitializeParams
+2025-07-06 08:36:19.792 +05:30 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.InitializeResult
+2025-07-06 08:36:19.803 +05:30 [DBG] Finished: Routing Request (0) initialize in 636ms
+2025-07-06 08:36:19.804 +05:30 [DBG] Finished: Processing request initialize 0 in 638ms
+2025-07-06 08:36:20.235 +05:30 [DBG] Finding descriptors for initialized
+2025-07-06 08:36:20.242 +05:30 [DBG] Queueing "Serial":initialized request for processing
+2025-07-06 08:36:20.247 +05:30 [DBG] Starting: Processing notification initialized
+2025-07-06 08:36:20.248 +05:30 [DBG] Starting: Routing Notification initialized
+2025-07-06 08:36:20.248 +05:30 [VRB] Converting params for Notification initialized to OmniSharp.Extensions.LanguageServer.Protocol.Models.InitializedParams
+2025-07-06 08:36:20.271 +05:30 [WRN] No ConfigurationItems have been defined, configuration won't surface any configuration from the client!
+2025-07-06 08:36:20.304 +05:30 [DBG] Finished: Routing Notification initialized in 55ms
+2025-07-06 08:36:20.304 +05:30 [DBG] Finished: Processing notification initialized in 57ms
+2025-07-06 13:02:39.144 +05:30 [INF] This only goes file...
+2025-07-06 13:02:39.660 +05:30 [INF] Foo
+2025-07-06 13:02:39.858 +05:30 [DBG] Finding descriptors for initialize
+2025-07-06 13:02:40.087 +05:30 [DBG] Queueing "Serial":initialize:0 request for processing
+2025-07-06 13:02:40.114 +05:30 [DBG] Starting: Processing request initialize 0
+2025-07-06 13:02:40.114 +05:30 [DBG] Starting: Routing Request (0) initialize
+2025-07-06 13:02:40.116 +05:30 [VRB] Converting params for Request (0) initialize to OmniSharp.Extensions.LanguageServer.Protocol.Models.InternalInitializeParams
+2025-07-06 13:02:40.119 +05:30 [VRB] Converting params for Notification initialize to OmniSharp.Extensions.LanguageServer.Protocol.Models.InternalInitializeParams
+2025-07-06 13:02:40.868 +05:30 [VRB] Response value was OmniSharp.Extensions.LanguageServer.Protocol.Models.InitializeResult
+2025-07-06 13:02:40.903 +05:30 [DBG] Finished: Routing Request (0) initialize in 788ms
+2025-07-06 13:02:40.904 +05:30 [DBG] Finished: Processing request initialize 0 in 789ms
+2025-07-06 13:02:44.503 +05:30 [DBG] Finding descriptors for initialized
+2025-07-06 13:02:44.505 +05:30 [DBG] Queueing "Serial":initialized request for processing
+2025-07-06 13:02:44.519 +05:30 [DBG] Starting: Processing notification initialized
+2025-07-06 13:02:44.519 +05:30 [DBG] Starting: Routing Notification initialized
+2025-07-06 13:02:44.520 +05:30 [VRB] Converting params for Notification initialized to OmniSharp.Extensions.LanguageServer.Protocol.Models.InitializedParams
+2025-07-06 13:02:44.591 +05:30 [WRN] No ConfigurationItems have been defined, configuration won't surface any configuration from the client!
+2025-07-06 13:02:44.636 +05:30 [DBG] Finished: Routing Notification initialized in 116ms
+2025-07-06 13:02:44.636 +05:30 [DBG] Finished: Processing notification initialized in 117ms
+2025-07-06 13:02:54.548 +05:30 [DBG] Finding descriptors for $/setTrace
+2025-07-06 13:02:54.562 +05:30 [DBG] Swapping from "Serial" to "Parallel"
+2025-07-06 13:02:54.563 +05:30 [DBG] Completing existing request process type "Serial"
+2025-07-06 13:02:54.568 +05:30 [DBG] Queueing "Parallel":$/setTrace request for processing
+2025-07-06 13:02:54.569 +05:30 [DBG] Starting: Processing notification $/setTrace
+2025-07-06 13:02:54.569 +05:30 [DBG] Starting: Routing Notification $/setTrace
+2025-07-06 13:02:54.569 +05:30 [VRB] Converting params for Notification $/setTrace to OmniSharp.Extensions.LanguageServer.Protocol.Models.SetTraceParams
+2025-07-06 13:02:54.575 +05:30 [DBG] Finished: Routing Notification $/setTrace in 5ms
+2025-07-06 13:02:54.575 +05:30 [DBG] Finished: Processing notification $/setTrace in 5ms
+2025-07-06 13:25:19.461 +05:30 [DBG] Finding descriptors for $/setTrace
+2025-07-06 13:25:19.462 +05:30 [DBG] Queueing "Parallel":$/setTrace request for processing
+2025-07-06 13:25:19.463 +05:30 [DBG] Starting: Processing notification $/setTrace
+2025-07-06 13:25:19.463 +05:30 [DBG] Starting: Routing Notification $/setTrace
+2025-07-06 13:25:19.463 +05:30 [VRB] Converting params for Notification $/setTrace to OmniSharp.Extensions.LanguageServer.Protocol.Models.SetTraceParams
+2025-07-06 13:25:19.471 +05:30 [DBG] Finished: Routing Notification $/setTrace in 7ms
+2025-07-06 13:25:19.471 +05:30 [DBG] Finished: Processing notification $/setTrace in 8ms
+2025-07-06 13:26:46.296 +05:30 [DBG] Finding descriptors for $/setTrace
+2025-07-06 13:26:46.297 +05:30 [DBG] Queueing "Parallel":$/setTrace request for processing
+2025-07-06 13:26:46.297 +05:30 [DBG] Starting: Processing notification $/setTrace
+2025-07-06 13:26:46.297 +05:30 [DBG] Starting: Routing Notification $/setTrace
+2025-07-06 13:26:46.297 +05:30 [VRB] Converting params for Notification $/setTrace to OmniSharp.Extensions.LanguageServer.Protocol.Models.SetTraceParams
+2025-07-06 13:26:46.299 +05:30 [DBG] Finished: Routing Notification $/setTrace in 1ms
+2025-07-06 13:26:46.299 +05:30 [DBG] Finished: Processing notification $/setTrace in 1ms
+2025-07-06 13:48:43.465 +05:30 [DBG] Finding descriptors for $/setTrace
+2025-07-06 13:48:43.475 +05:30 [DBG] Queueing "Parallel":$/setTrace request for processing
+2025-07-06 13:48:43.475 +05:30 [DBG] Starting: Processing notification $/setTrace
+2025-07-06 13:48:43.476 +05:30 [DBG] Starting: Routing Notification $/setTrace
+2025-07-06 13:48:43.476 +05:30 [VRB] Converting params for Notification $/setTrace to OmniSharp.Extensions.LanguageServer.Protocol.Models.SetTraceParams
+2025-07-06 13:48:43.477 +05:30 [DBG] Finished: Routing Notification $/setTrace in 1ms
+2025-07-06 13:48:43.477 +05:30 [DBG] Finished: Processing notification $/setTrace in 1ms
+2025-07-06 13:53:04.282 +05:30 [DBG] Finding descriptors for $/setTrace
+2025-07-06 13:53:04.284 +05:30 [DBG] Queueing "Parallel":$/setTrace request for processing
+2025-07-06 13:53:04.284 +05:30 [DBG] Starting: Processing notification $/setTrace
+2025-07-06 13:53:04.284 +05:30 [DBG] Starting: Routing Notification $/setTrace
+2025-07-06 13:53:04.285 +05:30 [VRB] Converting params for Notification $/setTrace to OmniSharp.Extensions.LanguageServer.Protocol.Models.SetTraceParams
+2025-07-06 13:53:04.289 +05:30 [DBG] Finished: Routing Notification $/setTrace in 4ms
+2025-07-06 13:53:04.289 +05:30 [DBG] Finished: Processing notification $/setTrace in 4ms
+2025-07-06 13:53:04.675 +05:30 [DBG] Finding descriptors for $/setTrace
+2025-07-06 13:53:04.675 +05:30 [DBG] Queueing "Parallel":$/setTrace request for processing
+2025-07-06 13:53:04.675 +05:30 [DBG] Starting: Processing notification $/setTrace
+2025-07-06 13:53:04.676 +05:30 [DBG] Starting: Routing Notification $/setTrace
+2025-07-06 13:53:04.676 +05:30 [VRB] Converting params for Notification $/setTrace to OmniSharp.Extensions.LanguageServer.Protocol.Models.SetTraceParams
+2025-07-06 13:53:04.677 +05:30 [DBG] Finished: Routing Notification $/setTrace in 1ms
+2025-07-06 13:53:04.677 +05:30 [DBG] Finished: Processing notification $/setTrace in 1ms
