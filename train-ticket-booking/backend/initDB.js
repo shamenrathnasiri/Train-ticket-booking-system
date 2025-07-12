@@ -25,8 +25,8 @@ connection.connect((err) => {
 
 
 connection.query (CreateDBAndTable, (eRed_Rose,result) => {
- if (err) throw err;
- console.log("Database and table initialized");
- connection.end();
+if (err) throw err;
+console.log("Database and table initialized");
+connection.end();
 });
 });
