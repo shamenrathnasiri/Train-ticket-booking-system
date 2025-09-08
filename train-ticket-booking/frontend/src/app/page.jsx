@@ -30,18 +30,14 @@ export default function Home() {
       />
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full">
-        <h1
-          className="text-5xl font-bold mb-4 text-white drop-shadow-lg text-center animate-fade-in-up"
-        >
+        <h1 className="text-5xl font-bold mb-4 text-white drop-shadow-lg text-center animate-fade-in-up">
           Welcome to Train Ticket Booking System - Sri lankan Railway
         </h1>
-        <p
-          className="text-2xl font-semibold mb-8 text-gray-200 drop-shadow text-center animate-fade-in"
-        >
+        <p className="text-2xl font-semibold mb-8 text-gray-200 drop-shadow text-center animate-fade-in">
           Hello, {name}
         </p>
         <button
-          className="px-8 py-3 rounded-full font-bold text-white bg-gradient-to-r from-pink-500 to-orange-500 shadow-lg hover:from-orange-500 hover:to-pink-500 transition-colors duration-300"
+          className="px-8 py-3 rounded-full font-bold text-white bg-gradient-to-r from-green-900 to-blue-800 shadow-lg hover:from-red-900 hover:to-pink-900 transition-colors duration-300"
           onClick={() => {
             localStorage.removeItem("token");
             localStorage.removeItem("name");
