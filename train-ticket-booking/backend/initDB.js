@@ -17,16 +17,30 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255)
 );
+
+CREATE TABLE IF NOT EXISTS bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    name VARCHAR(100),
+    age INT,
+    gender VARCHAR(10),
+    contact VARCHAR(100),
+    from_station VARCHAR(100),
+    to_station VARCHAR(100),
+    travel_date DATE,
+    class VARCHAR(20),
+    tickets INT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
 `;
 
 connection.connect((err) => {
-    if(err)throw err;
-    console.log("My SQL Connected");
+    if(err) throw err;
+    console.log("MySQL Connected");
 
-
-connection.query (CreateDBAndTable, (eRed_Rose,result) => {
-if (err) throw err;
-console.log("Database and table initialized");
-connection.end();
-});
+    connection.query(CreateDBAndTable, (err, result) => {
+        if (err) throw err;
+        console.log("Database and table initialized");
+        connection.end();
+    });
 });

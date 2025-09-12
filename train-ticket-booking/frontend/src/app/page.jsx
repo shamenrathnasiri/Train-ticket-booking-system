@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import bgimage1 from '../app/images/homebg1.jpg';
 import UserDateDisplay from "../components/UserDateDisplay";
+import { FaTicketAlt, FaTrain } from 'react-icons/fa';
 
 export default function Home() {
   const router = useRouter();
@@ -51,8 +52,29 @@ export default function Home() {
           <p className="text-2xl font-semibold mb-8 text-gray-200 drop-shadow text-center animate-fade-in">
             Hello, {name}
           </p>
+
+          <div className="flex gap-10">
+            <button className={` bg-white rounded-3xl 
+               hover:scale-105 
+               transition-all duration-300 w-36 h-64 flex flex-col 
+               items-center justify-center`} 
+            onClick={() => router.push('/booking')}>
+            <FaTicketAlt size={100} />
+            <p>Booking</p>
+            </button>
+            <button className={`bg-white rounded-3xl
+               hover:scale-105 
+               transition-all duration-300 w-36 h-64 flex flex-col 
+               items-center justify-center`} 
+            onClick={() => router.push('/shedule')}>
+            <FaTrain size={100} />
+            <p>Train Schedule</p>
+            </button>
+          </div>
       
         </div>
+
+     
         {/* Tailwind custom animation styles */}
         <style jsx global>{`
         @keyframes fade-in {
