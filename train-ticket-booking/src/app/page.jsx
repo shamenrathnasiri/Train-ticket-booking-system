@@ -10,6 +10,7 @@ export default function Home() {
   const [name, setName] = useState("");
   const [fullName, setFullName] = useState("");
   const [mounted, setMounted] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -42,6 +43,17 @@ export default function Home() {
     };
 
     fetchUserData();
+
+    // Mouse tracking for cursor animation
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   if (!mounted) return null;
@@ -53,7 +65,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden">
+    <div className="relative w-full min-h-screen overflow-hidden cursor-none">
       {/* Background with overlay */}
       <div
         className="absolute inset-0 w-full h-full"
@@ -164,6 +176,20 @@ export default function Home() {
       {/* Animated gradient elements */}
       <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob" />
       <div className="absolute bottom-0 left-10 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000" />
+
+      {/* Custom Cursor Animation */}
+      <div
+        className="fixed top-0 left-0 w-4 h-4 bg-green-400 rounded-full pointer-events-none z-50 transition-transform duration-100 ease-out"
+        style={{
+          transform: `translate(${mousePosition.x - 8}px, ${mousePosition.y - 8}px)`,
+        }}
+      />
+      <div
+        className="fixed top-0 left-0 w-8 h-8 border-2 border-green-400 rounded-full pointer-events-none z-40 transition-transform duration-300 ease-out"
+        style={{
+          transform: `translate(${mousePosition.x - 16}px, ${mousePosition.y - 16}px)`,
+        }}
+      />
 
       {/* Custom animations */}
       <style jsx global>{`
