@@ -1,7 +1,8 @@
 {
+  "/api/auth/me/route": "app/api/auth/me/route.js",
   "/page": "app/page.js",
-  "/shedule/page": "app/shedule/page.js",
   "/booking/page": "app/booking/page.js",
   "/signin/page": "app/signin/page.js",
+  "/shedule/page": "app/shedule/page.js",
   "/signup/page": "app/signup/page.js"
 }
