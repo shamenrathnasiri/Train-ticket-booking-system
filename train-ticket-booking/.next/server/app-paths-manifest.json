@@ -1,7 +1,8 @@
 {
-  "/signup/page": "app/signup/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/api/auth/signin/route": "app/api/auth/signin/route.js",
   "/page": "app/page.js",
+  "/booking/page": "app/booking/page.js",
   "/shedule/page": "app/shedule/page.js",
-  "/signin/page": "app/signin/page.js",
-  "/booking/page": "app/booking/page.js"
+  "/signin/page": "app/signin/page.js"
 }
