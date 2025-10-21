@@ -215,7 +215,7 @@ export default function Booking() {
           ← Back to Home
         </button>
       </div>
-      <h1 className="text-2xl font-bold mb-6 text-center text-blue-800">Train Ticket Booking</h1>
+      <h1 className="text-5xl font-bold mb-6 text-center text-blue-800">Train Ticket Booking</h1>
 
       {upcoming.length === 0 && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
