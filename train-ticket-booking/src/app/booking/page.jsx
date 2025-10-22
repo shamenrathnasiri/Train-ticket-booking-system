@@ -205,17 +205,22 @@ export default function Booking() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 pb-24">
+    // Background wrapper using public image at /images/bg2-booking.jpg
+    <div className="min-h-screen bg-[url('/images/bg2-booking.jpg')] bg-cover bg-center bg-no-repeat">
+      {/* subtle dark overlay for readability */}
+      <div className="min-h-screen bg-black/60">
+        <div className="max-w-6xl mx-auto p-6 pb-24">
       <div className="mb-3">
         <button
           type="button"
           onClick={() => router.push("/")}
-          className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-md border border-slate-300 text-slate-700 hover:bg-slate-50"
+          className="inline-flex items-center text-white   gap-2 text-sm px-3 py-1.5 rounded-md border border-blue-300 hover:text-blue-700 hover:bg-blue-50 hover:scale-105 transition-all duration-200"
         >
           ← Back to Home
         </button>
       </div>
-      <h1 className="text-5xl font-bold mb-6 text-center text-blue-800">Train Ticket Booking</h1>
+
+      <h1 className="text-5xl font-bold mb-6 text-center shadow-2xl text-white animate-fade-in">Train Ticket Booking</h1>
 
       {upcoming.length === 0 && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
@@ -226,13 +231,13 @@ export default function Booking() {
 
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Left column: Passenger & Journey details */}
-          <div className="space-y-4 bg-white rounded-xl shadow-md p-4 ring-1 ring-blue-100">
+          {/* Left column: Passenger & Journey details (glass/translucent style) */}
+          <div className="space-y-4 bg-white/10 backdrop-blur-sm border border-white/10 text-white rounded-xl shadow-lg p-4 ring-1 ring-white/20 hover:shadow-xl transition-shadow duration-300">
             {/* Train selection */}
             <div>
-              <label className="block text-sm font-medium mb-1">Select Train</label>
+              <label className="block text-sm font-medium mb-1 text-white/90">Select Train</label>
               <select
-                className="w-full rounded-md border border-slate-300 bg-white p-2 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+                className="w-full rounded-md border border-white/30 bg-white/5 p-2 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 value={selectedTrainId}
                 onChange={handleTrainChange}
               >
@@ -248,7 +253,7 @@ export default function Booking() {
                 ))}
               </select>
               {schedule ? (
-                <p className="mt-1 text-xs text-slate-600">
+                <p className="mt-1 text-xs text-white/80">
                   Train: <span className="font-medium text-slate-800">{schedule.trainName}</span>
                   <span className="mx-1">•</span>
                   {schedule.date}{schedule.departureTime ? ` ${schedule.departureTime}` : ''}
@@ -259,18 +264,18 @@ export default function Booking() {
                   Capacities: First {schedule.classes?.First?.capacity ?? '—'}, Second {schedule.classes?.Second?.capacity ?? '—'}
                 </p>
               ) : (
-                <p className="mt-1 text-xs text-amber-700">Please add trains in the schedule page or pick an upcoming train.</p>
+                <p className="mt-1 text-xs text-amber-200">Please add trains in the schedule page or pick an upcoming train.</p>
               )}
             </div>
             {/* Passenger Details */}
-            <h2 className="text-lg font-semibold text-blue-700">Passenger Details</h2>
+            <h2 className="text-lg font-semibold text-white animate-slide-in">Passenger Details</h2>
             <input
               type="text"
               name="name"
               placeholder="Full Name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full rounded-md border border-slate-300 bg-white p-2 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+              className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
               required
             />
             <div className="grid grid-cols-2 gap-3">
@@ -280,14 +285,14 @@ export default function Booking() {
                 placeholder="Age"
                 value={formData.age}
                 onChange={handleChange}
-                className="w-full rounded-md border border-slate-300 bg-white p-2 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+                className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 required
               />
               <select
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="w-full rounded-md border border-slate-300 bg-white p-2 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+                className="w-full rounded-md border border-white/30 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 required
               >
                 <option value="">Select Gender</option>
@@ -302,30 +307,30 @@ export default function Booking() {
               placeholder="Contact Number / Email"
               value={formData.contact}
               onChange={handleChange}
-              className="w-full rounded-md border border-slate-300 bg-white p-2 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+              className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
               required
             />
 
             {/* Journey Details */}
-            <h2 className="text-lg font-semibold pt-2 text-blue-700">Journey Details</h2>
-            <label className="text-sm text-slate-600">Arrival :</label>
+            <h2 className="text-lg font-semibold pt-2 text-white animate-slide-in">Journey Details</h2>
+            <label className="text-sm text-white/80">Arrival :</label>
             <input
               type="text"
               name="from"
               placeholder="From Station"
               value={formData.from}
               onChange={handleChange}
-              className="w-full rounded-md border border-slate-300 bg-white p-2 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+              className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
               required
             />
-            <label className="text-sm text-slate-600">Depature :</label>
+            <label className="text-sm text-white/80">Depature :</label>
             <input
               type="text"
               name="to"
               placeholder="To Station"
               value={formData.to}
               onChange={handleChange}
-              className="w-full rounded-md border border-slate-300 bg-white p-2 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+              className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
               required
             />
             <div className="grid grid-cols-2 gap-3">
@@ -334,7 +339,7 @@ export default function Booking() {
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                className="w-full rounded-md border border-slate-300 bg-white p-2 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+                className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 required
               />
               <select
@@ -346,7 +351,7 @@ export default function Booking() {
                   // Reset selected seats when class changes
                   setSelectedSeats([]);
                 }}
-                className="w-full rounded-md border border-slate-300 bg-white p-2 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+                className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 required
               >
                 <option value="First">First Class</option>
@@ -378,13 +383,13 @@ export default function Booking() {
                   const next = cap ? Math.max(1, Math.min(val, cap)) : Math.max(1, val);
                   setFormData({ ...formData, tickets: next });
                 }}
-                className="w-full rounded-md border border-slate-300 bg-white p-2 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+                className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 min={1}
                 max={schedule?.classes?.[formData.travelClass || "First"]?.capacity || undefined}
                 required
               />
               {schedule?.classes?.[formData.travelClass || "First"]?.capacity ? (
-                <p className="text-xs text-blue-700 mt-1">
+                <p className="text-xs text-white/80 mt-1">
                   Capacity for {formData.travelClass}: {schedule.classes[formData.travelClass].capacity}
                 </p>
               ) : null}
@@ -392,10 +397,10 @@ export default function Booking() {
           </div>
 
           {/* Right column: Seat selection */}
-          <div className="space-y-3 bg-white rounded-xl shadow-md p-4 ring-1 ring-blue-100 md:sticky md:top-4 h-fit">
+          <div className="space-y-3 bg-white rounded-xl shadow-lg p-4 ring-1 ring-green-100 md:sticky md:top-4 h-fit hover:shadow-xl transition-shadow duration-300">
             {schedule ? (
               <>
-                <h2 className="text-lg font-semibold text-blue-700">Seat Selection</h2>
+                <h2 className="text-lg font-semibold text-green-700 animate-slide-in">Seat Selection</h2>
                 {(() => {
                   const maxSelectable = Number(formData.tickets || 0);
                   const count = selectedSeats.length;
@@ -411,9 +416,9 @@ export default function Booking() {
                   const carriages = schedule?.classes?.[cls]?.carriages || 1;
                   return (
                     <div className="flex items-center gap-3">
-                      <span className="text-sm text-blue-700">Carriage:</span>
+                      <span className="text-sm text-green-700">Carriage:</span>
                       <select
-                        className="rounded-md border border-slate-300 bg-white p-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition"
+                        className="rounded-md border border-white/30 bg-white/5 p-1 text-sm text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                         value={carriageIndex}
                         onChange={(e) => {
                           setCarriageIndex(Number(e.target.value || 1));
@@ -436,7 +441,7 @@ export default function Booking() {
                   const prefix = `${cls[0]}C${carriageIndex}-`; // e.g., F C1-A1
                   const unavailable = (schedule?.unavailableSeats?.[cls] || []).filter((id) => id?.startsWith(prefix));
                   return (
-                    <div className="border border-slate-200 rounded-lg p-2 bg-white">
+                    <div className="border border-green-200 rounded-lg p-2 bg-green-50 hover:bg-green-100 transition-colors duration-200">
                       <SeatSelector
                         rows={rows}
                         cols={cols}
@@ -472,7 +477,7 @@ export default function Booking() {
           </div>
         </div>
         {/* Fixed bottom action bar */}
-        <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
+        <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-green-200 bg-green-50/90 backdrop-blur supports-[backdrop-filter]:bg-green-50/70">
           <div className="max-w-6xl mx-auto px-4 py-3">
             <div className="flex flex-col sm:flex-row items-center gap-3">
               {(() => {
@@ -497,7 +502,7 @@ export default function Booking() {
               })()}
               <button
                 type="submit"
-                className="w-full sm:w-auto min-w-[180px] bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 transition disabled:opacity-80 disabled:bg-blue-300 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto min-w-[180px] bg-green-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-green-700 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/60 transition-all duration-200 disabled:opacity-80 disabled:bg-green-300 disabled:cursor-not-allowed disabled:hover:scale-100"
                 disabled={!schedule || upcoming.length === 0 || !formData.travelClass || Number(formData.tickets || 0) < 1}
               >
                 Book Ticket
@@ -506,6 +511,8 @@ export default function Booking() {
           </div>
         </div>
       </form>
+        </div>
+      </div>
     </div>
   );
 }
