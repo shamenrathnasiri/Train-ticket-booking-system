@@ -97,7 +97,7 @@ export default function SeatSelector({
                       onClick={() => toggleSeat(id)}
                       disabled={unavailable}
                       className={[
-                        "h-10 w-12 md:w-14 md:h-12 rounded-md text-xs md:text-sm font-medium border shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 disabled:opacity-80 transition-colors",
+                        "h-10 w-12 md:w-14 md:h-12 rounded-md text-xs md:text-sm font-medium border shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500/50 disabled:opacity-80 transition-colors",
                         selected
                           ? "bg-emerald-500 text-white border-emerald-600 hover:bg-emerald-600"
                           : unavailable
@@ -131,7 +131,7 @@ export default function SeatSelector({
         {(selectedSeats && selectedSeats.length > 0) ? (
           <div className="mt-1 flex flex-wrap gap-2">
             {selectedSeats.map((s) => (
-              <span key={s} className="inline-flex items-center px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs border border-blue-200">{s}</span>
+              <span key={s} className="inline-flex items-center px-2 py-0.5 rounded-full bg-green-50 text-green-700 text-xs border border-green-200">{s}</span>
             ))}
           </div>
         ) : (
