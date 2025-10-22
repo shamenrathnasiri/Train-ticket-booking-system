@@ -219,7 +219,7 @@ export default function Booking() {
           ← Back to Home
         </button>
       </div>
-
+      
       <h1 className="text-5xl font-bold mb-6 text-center shadow-2xl text-white animate-fade-in">Train Ticket Booking</h1>
 
       {upcoming.length === 0 && (
@@ -292,13 +292,13 @@ export default function Booking() {
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="w-full rounded-md border border-white/30 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
+                className="w-full rounded-md border border-white/30 bg-transparent text-white appearance-none pr-10 bg-[url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 20 20\' fill=\'none\' stroke=\'white\'><path d=\'M6 8l4 4 4-4\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/></svg>')] bg-no-repeat bg-right bg-[length:1.2rem] focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 required
               >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
+                <option value="" style={{color: '#000'}}>Select Gender</option>
+                <option value="Male" style={{color: '#000'}}>Male</option>
+                <option value="Female" style={{color: '#000'}}>Female</option>
+                <option value="Other" style={{color: '#000'}}>Other</option>
               </select>
             </div>
             <input
@@ -418,7 +418,7 @@ export default function Booking() {
                     <div className="flex items-center gap-3">
                       <span className="text-sm text-green-700">Carriage:</span>
                       <select
-                        className="rounded-md border border-white/30 bg-white/5 p-1 text-sm text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
+                        className="rounded-md border border-slate-300 bg-white p-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/40 focus:border-green-500 transition-all duration-200 hover:border-green-400"
                         value={carriageIndex}
                         onChange={(e) => {
                           setCarriageIndex(Number(e.target.value || 1));
