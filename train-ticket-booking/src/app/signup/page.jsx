@@ -42,12 +42,19 @@ export default function SignUp() {
     } finally {
       setLoading(false);
     }
+
   };
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-blue-50 via-teal-50 to-green-50">
       {/* Left Side - Details and Image with Bubbles */}
-      <div className="w-1/2 relative overflow-hidden bg-gradient-to-br from-blue-100 to-green-100 flex flex-col justify-center items-center p-8 animate-fade-in-left">
+      <div className="w-1/2 relative overflow-hidden flex flex-col justify-center items-center p-8 animate-fade-in-left"
+        style={{
+          backgroundImage: `url('/images/signinup.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         {/* Bubble Animations */}
         <div className="absolute inset-0">
           <div className="bubble bubble-1"></div>
@@ -58,20 +65,21 @@ export default function SignUp() {
           <div className="bubble bubble-6"></div>
         </div>
 
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-blue-600/40"></div>
+
         {/* Content */}
         <div className="relative z-10 text-center">
           <div className="inline-flex items-center justify-center w-32 h-32 bg-gradient-to-br from-blue-500 to-green-500 rounded-full shadow-lg mb-6 animate-bounce-slow">
             <MdTrain className="text-white text-6xl" />
           </div>
-          <h1 className="text-5xl font-bold text-gray-800 mb-4">
-            <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-              Sri Lanka Railway
-            </span>
+          <h1 className="text-5xl font-bold text-white mb-4 text-shadow">
+            Sri Lanka Railway
           </h1>
-          <p className="text-gray-700 text-lg mb-6 max-w-md">
+          <p className="text-white text-lg mb-6 max-w-md text-shadow">
             Embark on your journey with ease. Book train tickets seamlessly and travel comfortably across Sri Lanka.
           </p>
-          <div className="text-blue-600 font-semibold">
+          <div className="text-white font-semibold text-shadow">
             Join thousands of satisfied travelers
           </div>
         </div>
@@ -298,6 +306,9 @@ export default function SignUp() {
         }
         .animate-slide-down {
           animation: slide-down 0.3s ease-out;
+        }
+        .text-shadow {
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
       `}</style>
     </div>
