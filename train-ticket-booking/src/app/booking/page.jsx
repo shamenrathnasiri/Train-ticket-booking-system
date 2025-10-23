@@ -206,7 +206,7 @@ export default function Booking() {
 
   return (
     // Background wrapper using public image at /images/bg2-booking.jpg
-    <div className="min-h-screen bg-[url('/images/bg2-booking.jpg')] bg-cover bg-center bg-no-repeat">
+    <div className="min-h-screen bg-[url('/images/bg2-booking.jpg')] bg-cover bg-center bg-no-repeat ">
       {/* subtle dark overlay for readability */}
       <div className="min-h-screen bg-black/60">
         <div className="max-w-6xl mx-auto p-6 pb-24">
