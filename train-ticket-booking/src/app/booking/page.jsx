@@ -223,9 +223,9 @@ export default function Booking() {
       <h1 className="text-5xl font-bold mb-6 text-center shadow-2xl text-white animate-fade-in">Train Ticket Booking</h1>
 
       {upcoming.length === 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-          <h3 className="text-lg font-semibold text-amber-800">No Trains Available</h3>
-          <p className="text-amber-700">There are no upcoming trains scheduled. Please visit the <a href="/shedule" className="underline hover:text-amber-900">Schedule page</a> to add train schedules before booking tickets.</p>
+        <div className="bg-amber-50/30 border border-amber-200/30 rounded-lg p-4 mb-6 backdrop-blur-sm">
+          <h3 className="text-lg font-semibold text-amber-100">No Trains Available</h3>
+          <p className="text-amber-200">There are no upcoming trains scheduled. Please visit the <a href="/shedule" className="underline hover:text-amber-300">Schedule page</a> to add train schedules before booking tickets.</p>
         </div>
       )}
 
@@ -237,24 +237,24 @@ export default function Booking() {
             <div>
               <label className="block text-sm font-medium mb-1 text-white/90">Select Train</label>
               <select
-                className="w-full rounded-md border border-white/30 bg-white/5 p-2 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
+                className="w-full rounded-md border border-white/30 bg-transparent text-white p-2 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 value={selectedTrainId}
                 onChange={handleTrainChange}
               >
                 {upcoming.length === 0 ? (
-                  <option value="">No upcoming trains available</option>
+                  <option value="" style={{color: '#000'}}>No upcoming trains available</option>
                 ) : (
-                  <option value="">Select a train</option>
+                  <option value="" style={{color: '#000'}}>Select a train</option>
                 )}
                 {upcoming.map((t) => (
-                  <option key={t.id} value={t.id}>
+                  <option key={t.id} value={t.id} style={{color: '#000'}}>
                     {t.trainName}
                   </option>
                 ))}
               </select>
               {schedule ? (
                 <p className="mt-1 text-xs text-white/80">
-                  Train: <span className="font-medium text-slate-800">{schedule.trainName}</span>
+                  Train: <span className="font-medium text-white">{schedule.trainName}</span>
                   <span className="mx-1">•</span>
                   {schedule.date}{schedule.departureTime ? ` ${schedule.departureTime}` : ''}
                   {schedule.arrivalTime ? ` → ${schedule.arrivalTime}` : ''}
@@ -351,22 +351,22 @@ export default function Booking() {
                   // Reset selected seats when class changes
                   setSelectedSeats([]);
                 }}
-                className="w-full rounded-md border border-white/30 bg-white/5 text-white p-2 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
+                className="w-full rounded-md border border-white/30 bg-transparent text-white p-2 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 required
               >
-                <option value="First">First Class</option>
-                <option value="Second">Second Class</option>
+                <option value="First" style={{color: '#000'}}>First Class</option>
+                <option value="Second" style={{color: '#000'}}>Second Class</option>
               </select>
             </div>
             {schedule && (
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-sm text-slate-600">Departure Time</label>
-                  <p className="text-sm font-medium text-slate-800">{schedule.departureTime || '—'}</p>
+                  <label className="text-sm text-white/80">Departure Time</label>
+                  <p className="text-sm font-medium text-white/90">{schedule.departureTime || '—'}</p>
                 </div>
                 <div>
-                  <label className="text-sm text-slate-600">Arrival Time</label>
-                  <p className="text-sm font-medium text-slate-800">{schedule.arrivalTime || '—'}</p>
+                  <label className="text-sm text-white/80">Arrival Time</label>
+                  <p className="text-sm font-medium text-white/90">{schedule.arrivalTime || '—'}</p>
                 </div>
               </div>
             )}
@@ -397,10 +397,10 @@ export default function Booking() {
           </div>
 
           {/* Right column: Seat selection */}
-          <div className="space-y-3 bg-white rounded-xl shadow-lg p-4 ring-1 ring-green-100 md:sticky md:top-4 h-fit hover:shadow-xl transition-shadow duration-300">
+          <div className="space-y-3 bg-white/30 backdrop-blur-sm text-white rounded-xl shadow-lg p-4 ring-1 ring-green-100 md:sticky md:top-4 h-fit hover:shadow-xl transition-shadow duration-300 border border-white/20">
             {schedule ? (
               <>
-                <h2 className="text-lg font-semibold text-green-700 animate-slide-in">Seat Selection</h2>
+                <h2 className="text-lg font-bold text-white animate-slide-in ">Seat Selection</h2>
                 {(() => {
                   const maxSelectable = Number(formData.tickets || 0);
                   const count = selectedSeats.length;
@@ -416,9 +416,9 @@ export default function Booking() {
                   const carriages = schedule?.classes?.[cls]?.carriages || 1;
                   return (
                     <div className="flex items-center gap-3">
-                      <span className="text-sm text-green-700">Carriage:</span>
+                      <span className="text-sm text-white">Carriage:</span>
                       <select
-                        className="rounded-md border border-slate-300 bg-white p-1 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/40 focus:border-green-500 transition-all duration-200 hover:border-green-400"
+                        className="rounded-md border border-slate-300 bg-slate-100 p-1 text-sm text-black focus:outline-none focus:ring-2 focus:ring-green-500/40 focus:border-green-500 transition-all duration-200 hover:border-green-400"
                         value={carriageIndex}
                         onChange={(e) => {
                           setCarriageIndex(Number(e.target.value || 1));
@@ -441,7 +441,7 @@ export default function Booking() {
                   const prefix = `${cls[0]}C${carriageIndex}-`; // e.g., F C1-A1
                   const unavailable = (schedule?.unavailableSeats?.[cls] || []).filter((id) => id?.startsWith(prefix));
                   return (
-                    <div className="border border-green-200 rounded-lg p-2 bg-green-50 hover:bg-green-100 transition-colors duration-200">
+                    <div className="border border-white/20 rounded-lg p-2 bg-white/30 backdrop-blur-sm hover:bg-white/40 transition-colors duration-200">
                       <SeatSelector
                         rows={rows}
                         cols={cols}
@@ -461,7 +461,7 @@ export default function Booking() {
               </>
             ) : (
               <div className="text-center py-8">
-                <p className="text-slate-500">Please select a train first to view seat selection.</p>
+                <p className="text-white/80">Please select a train first to view seat selection.</p>
               </div>
             )}
             {error && (
@@ -477,7 +477,7 @@ export default function Booking() {
           </div>
         </div>
         {/* Fixed bottom action bar */}
-        <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-green-200 bg-green-50/90 backdrop-blur supports-[backdrop-filter]:bg-green-50/70">
+        <div className="fixed bottom-0 left-0 right-0 z-20 border-t border-white/20 bg-white/10 backdrop-blur supports-[backdrop-filter]:bg-white/5">
           <div className="max-w-6xl mx-auto px-4 py-3">
             <div className="flex flex-col sm:flex-row items-center gap-3">
               {(() => {
@@ -486,15 +486,15 @@ export default function Booking() {
                 const ok = have === need && need > 0;
                 const cls = formData.travelClass || "First";
                 return (
-                  <div className="flex-1 w-full text-sm text-slate-700">
+                  <div className="flex-1 w-full text-sm text-white/90">
                     <span className={`inline-block px-2 py-1 rounded-full mr-2 ${ok ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>{have}/{need} seats</span>
-                    <span className="text-slate-600">Class: </span>
-                    <span className="font-medium text-slate-800">{cls}</span>
+                    <span className="text-white/80">Class: </span>
+                    <span className="font-medium text-white">{cls}</span>
                     {schedule?.date ? (
                       <>
-                        <span className="mx-2 text-slate-400">•</span>
-                        <span className="text-slate-600">Date: </span>
-                        <span className="font-medium text-slate-800">{formData.date || schedule.date}</span>
+                        <span className="mx-2 text-white/60">•</span>
+                        <span className="text-white/80">Date: </span>
+                        <span className="font-medium text-white">{formData.date || schedule.date}</span>
                       </>
                     ) : null}
                   </div>
