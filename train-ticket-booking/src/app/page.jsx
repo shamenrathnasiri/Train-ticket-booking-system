@@ -68,7 +68,7 @@ export default function Home() {
     <div className="relative w-full min-h-screen overflow-hidden cursor-none">
       {/* Background with overlay */}
       <div
-        className="absolute inset-0 w-full h-full"
+        className="absolute inset-0 w-full h-full animate-fade-in transition-all duration-1000"
         style={{
           backgroundImage: `url(${bgimage1.src})`,
           backgroundSize: "cover",
@@ -79,10 +79,10 @@ export default function Home() {
       />
       
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-blue-900/40 to-slate-900/60" />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-blue-900/40 to-slate-900/60 animate-fade-in transition-all duration-1000" />
 
       {/* Top Navigation Bar */}
-      <div className="absolute top-0 left-0 right-0 z-30 bg-gradient-to-r from-slate-900/80 via-green-900/70 to-slate-900/80 backdrop-blur-md border-b border-green-500/20">
+      <div className="absolute top-0 left-0 right-0 z-30 bg-gradient-to-r from-slate-900/80 via-green-900/70 to-slate-900/80 backdrop-blur-md border-b border-green-500/20 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center shadow-lg">
@@ -107,10 +107,10 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-20 flex flex-col items-center justify-center w-full min-h-screen pt-24 pb-12 px-4 sm:px-6">
+      <div className="relative z-20 flex flex-col items-center justify-center w-full min-h-screen pt-24 pb-12 px-4 sm:px-6 transition-all duration-500">
         
         {/* Welcome Section */}
-        <div className="text-center mb-12 lg:mb-16 max-w-3xl">
+        <div className="text-center mb-12 lg:mb-16 max-w-3xl animate-fade-in transition-all duration-500">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4 text-white drop-shadow-lg leading-tight animate-fade-in-up">
             Welcome to Train Ticket Booking
           </h1>
@@ -123,7 +123,7 @@ export default function Home() {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-2xl mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-2xl mb-12 animate-fade-in transition-all duration-500">
           
           {/* Book Tickets Card */}
           <button
@@ -165,7 +165,7 @@ export default function Home() {
         </div>
 
         {/* Info Section */}
-        <div className="text-center text-gray-200 max-w-md">
+        <div className="text-center text-gray-200 max-w-md animate-fade-in transition-all duration-500">
           <p className="text-sm sm:text-base leading-relaxed">
             <span className="block mb-2">✓ Quick and easy booking process</span>
             <span className="block">✓ Real-time train availability</span>
@@ -174,8 +174,8 @@ export default function Home() {
       </div>
 
       {/* Animated gradient elements */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob" />
-      <div className="absolute bottom-0 left-10 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000" />
+      <div className="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob transition-all duration-1000" />
+      <div className="absolute bottom-0 left-10 w-72 h-72 bg-green-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000 transition-all duration-1000" />
 
       {/* Custom Cursor Animation */}
       <div
