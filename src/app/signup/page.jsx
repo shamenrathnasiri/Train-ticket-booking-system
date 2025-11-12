@@ -27,11 +27,9 @@ export default function SignUp() {
 
       if (res.ok) {
         setMsgType("success");
-        setMsg("Account created successfully! Redirecting...");
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        
-        setTimeout(() => router.push("/"), 1500);
+        setMsg("Account created successfully! Please sign in.");
+        // No auto-login; redirect to sign in page
+        setTimeout(() => router.push("/signin"), 1200);
       } else {
         setMsgType("error");
         setMsg(data.error || "Failed to create account");

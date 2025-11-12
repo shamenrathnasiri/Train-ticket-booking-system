@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createUser, generateToken } from "@/lib/auth";
+import { createUser } from "@/lib/auth";
 import { ensureDatabaseSetup } from "@/lib/init";
 
 export const runtime = "nodejs";
@@ -37,33 +37,20 @@ export async function POST(request) {
       );
     }
 
-    // Create user
+    // Create user (no automatic login)
     const user = await createUser({ email, password, fullName, phone });
 
-    // Generate token
-    const token = generateToken({ userId: user.id, email: user.email });
-
-    // Create response with cookie
-    const response = NextResponse.json({
+    // Respond without token; client will redirect to /signin
+    return NextResponse.json({
       success: true,
+      message: "Account created successfully. Please sign in.",
       user: {
         id: user.id,
         email: user.email,
         fullName: user.fullName,
         phone: user.phone
-      },
-      token
+      }
     }, { status: 201 });
-
-    // Set HTTP-only cookie
-    response.cookies.set('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7 // 7 days
-    });
-
-    return response;
 
   } catch (error) {
     console.error("Signup error:", error);
