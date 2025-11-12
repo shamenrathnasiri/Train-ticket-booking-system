@@ -1,4 +1,3 @@
-import { getPool } from './db.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -162,14 +161,27 @@ async function initializeDatabase() {
   }
 }
 
-// Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-  initializeDatabase()
-    .then(success => process.exit(success ? 0 : 1))
-    .catch(err => {
-      console.error(err);
-      process.exit(1);
-    });
+// Run if called directly (Node.js CLI only). Guard against Edge/middleware environments.
+try {
+  // Detect Node.js CLI execution safely
+  const isNodeCli =
+    typeof process !== 'undefined' &&
+    Array.isArray(process.argv) &&
+    typeof import.meta !== 'undefined' &&
+    typeof import.meta.url === 'string' &&
+    import.meta.url.startsWith('file://') &&
+    `file://${process.argv[1]}` === import.meta.url;
+
+  if (isNodeCli) {
+    initializeDatabase()
+      .then(success => process.exit(success ? 0 : 1))
+      .catch(err => {
+        console.error(err);
+        process.exit(1);
+      });
+  }
+} catch (_) {
+  // Ignore in non-Node environments
 }
 
 export default initializeDatabase;

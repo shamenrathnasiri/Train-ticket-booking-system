@@ -4,7 +4,12 @@ let dbInitialized = false;
 
 export async function middleware(request) {
   // Initialize database on first request
-  if (!dbInitialized && typeof window === 'undefined') {
+  if (
+    !dbInitialized &&
+    typeof window === 'undefined' &&
+    // Skip in Edge runtime (middleware runs on Edge)
+    typeof EdgeRuntime === 'undefined'
+  ) {
     try {
       console.log(' Middleware: Ensuring database setup...');
       const { ensureDatabaseSetup } = await import('./lib/init.js');

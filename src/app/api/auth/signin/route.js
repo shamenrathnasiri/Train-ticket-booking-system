@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { authenticateUser, generateToken } from "@/lib/auth";
+import { ensureDatabaseSetup } from "@/lib/init";
 
 export const runtime = "nodejs";
 
 export async function POST(request) {
   try {
+    // Ensure database is initialized before handling auth
+    await ensureDatabaseSetup();
+
     const body = await request.json();
     const { email, password } = body;
 

@@ -1,4 +1,4 @@
-// File: E:\My project\Train-ticket-booking-system\train-ticket-booking\src\app\signin\page.jsx
+// File: E:\My project\Train-ticket-booking-system\src\app\signin\page.jsx
 import * as entry from '../../../../src/app/signin/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

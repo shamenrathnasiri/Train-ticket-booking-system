@@ -12,9 +12,8 @@ export async function ensureDatabaseSetup() {
 }
 
 // Automatically run database setup when this module is loaded
-// This ensures tables are created when the Next.js server starts
-if (typeof window === 'undefined') {
-  // Only run on server-side
+// Only in Node.js runtime (not Edge/middleware)
+if (typeof window === 'undefined' && typeof EdgeRuntime === 'undefined') {
   ensureDatabaseSetup().catch(err => {
     console.error('Failed to initialize database:', err);
   });

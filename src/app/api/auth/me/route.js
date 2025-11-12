@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { getUserFromRequest } from "@/lib/auth";
+import { ensureDatabaseSetup } from "@/lib/init";
 
 export const runtime = "nodejs";
 
 export async function GET(request) {
   try {
+    // Ensure database is initialized before reading
+    await ensureDatabaseSetup();
+
     const user = await getUserFromRequest(request);
 
     if (!user) {

@@ -1,4 +1,4 @@
-// File: E:\My project\Train-ticket-booking-system\train-ticket-booking\src\app\api\auth\me\route.js
+// File: E:\My project\Train-ticket-booking-system\src\app\api\auth\me\route.js
 import * as entry from '../../../../../../src/app/api/auth/me/route.js'
 import type { NextRequest } from 'next/server.js'
 
