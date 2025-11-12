@@ -1,7 +1,14 @@
-"use client";
+﻿"use client";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { FaPlus, FaArrowRight, FaTrash, FaStar, FaChair } from 'react-icons/fa';
+import { FaPlus, FaArrowRight, FaTrash, FaStar, FaChair, FaTrain, FaClock, FaMapMarkerAlt } from 'react-icons/fa';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
 const SCHEDULES_ENDPOINT = `${API_BASE}/api/schedules`;
@@ -160,291 +167,363 @@ export default function Shedule() {
   };
 
   return (
-    <div className="min-h-screen bg-[url('/images/bg2-booking.jpg')] bg-cover bg-center bg-no-repeat relative">
-      <div className="absolute inset-0 bg-white/85"></div>
-      <div className="relative min-h-screen py-8">
-        <div className="max-w-6xl mx-auto px-4">
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-            <button
-              type="button"
-              onClick={() => router.push("/")}
-              className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-white/20 text-white hover:bg-white/30 transition-colors font-medium"
-            >
-              ← Back to Home
-            </button>
-            <h1 className="text-3xl font-bold text-white text-center mt-4">Train Schedule Management</h1>
-            <p className="text-center text-blue-100 mt-2">Create and manage train schedules with detailed seat configurations</p>
-          </div>
-
-          <div className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Train Details Section */}
-              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
-                <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                  <FaPlus className="text-blue-600" /> Train Details
-                </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Train Name/Number</label>
-                    <input
-                      type="text"
-                      value={form.trainName}
-                      onChange={(e) => setForm({ ...form, trainName: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="e.g., IC-101"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Travel Date</label>
-                    <input
-                      type="date"
-                      value={form.date}
-                      onChange={(e) => setForm({ ...form, date: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Departure Time</label>
-                    <input
-                      type="time"
-                      value={form.departureTime}
-                      onChange={(e) => setForm({ ...form, departureTime: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Arrival Time</label>
-                    <input
-                      type="time"
-                      value={form.arrivalTime}
-                      onChange={(e) => setForm({ ...form, arrivalTime: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Start Station</label>
-                    <input
-                      type="text"
-                      value={form.startStation}
-                      onChange={(e) => setForm({ ...form, startStation: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="e.g., Colombo"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Destination Station</label>
-                    <input
-                      type="text"
-                      value={form.stopStation}
-                      onChange={(e) => setForm({ ...form, stopStation: e.target.value })}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="e.g., Kandy"
-                      required
-                    />
-                  </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-blue-100">
+      <div className="container mx-auto py-8 px-4 max-w-7xl">
+        <div className="mb-6">
+          <Button 
+            variant="outline" 
+            onClick={() => router.push("/")}
+            className="mb-4 border-primary/20 hover:bg-primary/5"
+          >
+            â† Back to Home
+          </Button>
+          
+          <Card className="border-primary/20 shadow-lg bg-gradient-to-r from-primary/5 to-secondary/5">
+            <CardHeader className="text-center pb-4">
+              <div className="flex justify-center mb-3">
+                <div className="p-3 bg-primary/10 rounded-full">
+                  <FaTrain className="text-4xl text-primary" />
                 </div>
               </div>
-
-              {/* Seat Configuration Section */}
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-6 border border-amber-200">
-                  <h3 className="text-lg font-semibold text-amber-800 mb-4 flex items-center gap-2">
-                    <FaStar className="text-amber-600" /> First Class Configuration
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-amber-700 mb-1">Number of Carriages</label>
-                        <input
-                          type="number"
-                          min={1}
-                          max={50}
-                          value={form.first.carriages}
-                          onChange={(e) => setForm({ ...form, first: { ...form.first, carriages: onNum(e.target.value, 1, 50) } })}
-                          className="w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-amber-700 mb-1">Rows per Carriage</label>
-                        <input
-                          type="number"
-                          min={1}
-                          max={26}
-                          value={form.first.rows}
-                          onChange={(e) => setForm({ ...form, first: { ...form.first, rows: onNum(e.target.value, 1, 26) } })}
-                          className="w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-amber-700 mb-1">Seats per Row</label>
-                      <input
-                        type="number"
-                        min={1}
-                        max={10}
-                        value={form.first.cols}
-                        onChange={(e) => setForm({ ...form, first: { ...form.first, cols: onNum(e.target.value, 1, 10) } })}
-                        className="w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"
-                      />
-                    </div>
-                    <div className="bg-amber-200 rounded-lg px-4 py-3">
-                      <p className="text-sm font-medium text-amber-800">
-                        Total First Class Seats: <span className="font-bold text-lg">{totalSeats.first}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
-                  <h3 className="text-lg font-semibold text-green-800 mb-4 flex items-center gap-2">
-                    <FaChair className="text-green-600" /> Second Class Configuration
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-green-700 mb-1">Number of Carriages</label>
-                        <input
-                          type="number"
-                          min={1}
-                          max={50}
-                          value={form.second.carriages}
-                          onChange={(e) => setForm({ ...form, second: { ...form.second, carriages: onNum(e.target.value, 1, 50) } })}
-                          className="w-full rounded-lg border border-green-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-green-700 mb-1">Rows per Carriage</label>
-                        <input
-                          type="number"
-                          min={1}
-                          max={26}
-                          value={form.second.rows}
-                          onChange={(e) => setForm({ ...form, second: { ...form.second, rows: onNum(e.target.value, 1, 26) } })}
-                          className="w-full rounded-lg border border-green-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-green-700 mb-1">Seats per Row</label>
-                      <input
-                        type="number"
-                        min={1}
-                        max={10}
-                        value={form.second.cols}
-                        onChange={(e) => setForm({ ...form, second: { ...form.second, cols: onNum(e.target.value, 1, 10) } })}
-                        className="w-full rounded-lg border border-green-300 bg-white px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
-                      />
-                    </div>
-                    <div className="bg-green-200 rounded-lg px-4 py-3">
-                      <p className="text-sm font-medium text-green-800">
-                        Total Second Class Seats: <span className="font-bold text-lg">{totalSeats.second}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Summary and Actions */}
-              <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="bg-blue-100 rounded-lg px-6 py-4">
-                    <p className="text-lg font-semibold text-blue-800">
-                      Grand Total Seats: <span className="text-2xl font-bold text-blue-900">{totalSeats.all}</span>
-                    </p>
-                  </div>
-                  <div className="flex gap-3">
-                    <button
-                      type="button"
-                      onClick={() => router.push("/booking")}
-                      className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors inline-flex items-center gap-2"
-                    >
-                      <FaArrowRight /> Go to Booking
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
-                    >
-                      <FaPlus /> {isSubmitting ? "Saving..." : "Add Train Schedule"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {message && (
-                <div className="p-4 rounded-lg bg-green-50 border border-green-200 text-green-800 font-medium" role="status">
-                  {message}
-                </div>
-              )}
-              {error && (
-                <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 font-medium" role="alert">
-                  {error}
-                </div>
-              )}
-            </form>
-
-            {/* Scheduled Trains Table */}
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Scheduled Trains</h2>
-              {loading ? (
-                <div className="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 text-lg">
-                  Loading train schedules...
-                </div>
-              ) : trains.length === 0 ? (
-                <div className="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
-                  <p className="text-gray-500 text-lg">No trains scheduled yet.</p>
-                  <p className="text-gray-400 text-sm mt-2">Add your first train schedule above.</p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto bg-white rounded-xl border border-gray-200 shadow-sm">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Train</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Departure</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Arrival</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Route</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Class</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Second Class</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {trains.map((t, index) => (
-                        <tr key={t.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{t.trainName}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t.date}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t.departureTime || '-'}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t.arrivalTime || '-'}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t.startStation} → {t.stopStation}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t.classes?.First?.capacity ?? '-'}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{t.classes?.Second?.capacity ?? '-'}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <button
-                              onClick={() => removeTrain(t.id)}
-                              disabled={removingId === t.id}
-                              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium bg-red-100 text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
-                            >
-                              <FaTrash /> {removingId === t.id ? "Removing..." : "Remove"}
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          </div>
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                Train Schedule Management
+              </CardTitle>
+              <CardDescription className="text-base">
+                Create and manage train schedules with detailed seat configurations
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <Card className="border-primary/20 shadow-md">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-primary">
+                <FaTrain /> Train Details
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="trainName" className="flex items-center gap-2">
+                    <FaTrain className="text-primary text-sm" /> Train Name/Number
+                  </Label>
+                  <Input
+                    id="trainName"
+                    type="text"
+                    value={form.trainName}
+                    onChange={(e) => setForm({ ...form, trainName: e.target.value })}
+                    placeholder="e.g., IC-101"
+                    required
+                    className="border-primary/20 focus:border-primary"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="date">Travel Date</Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    value={form.date}
+                    onChange={(e) => setForm({ ...form, date: e.target.value })}
+                    required
+                    className="border-primary/20 focus:border-primary"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="departureTime" className="flex items-center gap-2">
+                    <FaClock className="text-primary text-sm" /> Departure Time
+                  </Label>
+                  <Input
+                    id="departureTime"
+                    type="time"
+                    value={form.departureTime}
+                    onChange={(e) => setForm({ ...form, departureTime: e.target.value })}
+                    className="border-primary/20 focus:border-primary"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="arrivalTime" className="flex items-center gap-2">
+                    <FaClock className="text-primary text-sm" /> Arrival Time
+                  </Label>
+                  <Input
+                    id="arrivalTime"
+                    type="time"
+                    value={form.arrivalTime}
+                    onChange={(e) => setForm({ ...form, arrivalTime: e.target.value })}
+                    className="border-primary/20 focus:border-primary"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="startStation" className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-secondary text-sm" /> Start Station
+                  </Label>
+                  <Input
+                    id="startStation"
+                    type="text"
+                    value={form.startStation}
+                    onChange={(e) => setForm({ ...form, startStation: e.target.value })}
+                    placeholder="e.g., Colombo"
+                    required
+                    className="border-secondary/20 focus:border-secondary"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="stopStation" className="flex items-center gap-2">
+                    <FaMapMarkerAlt className="text-secondary text-sm" /> Destination Station
+                  </Label>
+                  <Input
+                    id="stopStation"
+                    type="text"
+                    value={form.stopStation}
+                    onChange={(e) => setForm({ ...form, stopStation: e.target.value })}
+                    placeholder="e.g., Kandy"
+                    required
+                    className="border-secondary/20 focus:border-secondary"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="border-amber-400/30 bg-gradient-to-br from-amber-50/50 to-yellow-50/50 shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-amber-700">
+                  <FaStar /> First Class Configuration
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstCarriages" className="text-amber-700">Carriages</Label>
+                    <Input
+                      id="firstCarriages"
+                      type="number"
+                      min={1}
+                      max={50}
+                      value={form.first.carriages}
+                      onChange={(e) => setForm({ ...form, first: { ...form.first, carriages: onNum(e.target.value, 1, 50) } })}
+                      className="border-amber-300 focus:border-amber-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="firstRows" className="text-amber-700">Rows</Label>
+                    <Input
+                      id="firstRows"
+                      type="number"
+                      min={1}
+                      max={26}
+                      value={form.first.rows}
+                      onChange={(e) => setForm({ ...form, first: { ...form.first, rows: onNum(e.target.value, 1, 26) } })}
+                      className="border-amber-300 focus:border-amber-500"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="firstCols" className="text-amber-700">Seats per Row</Label>
+                  <Input
+                    id="firstCols"
+                    type="number"
+                    min={1}
+                    max={10}
+                    value={form.first.cols}
+                    onChange={(e) => setForm({ ...form, first: { ...form.first, cols: onNum(e.target.value, 1, 10) } })}
+                    className="border-amber-300 focus:border-amber-500"
+                  />
+                </div>
+                <Separator className="bg-amber-200" />
+                <div className="bg-amber-100 rounded-lg p-4 text-center">
+                  <p className="text-sm text-amber-700 font-medium">Total Seats</p>
+                  <p className="text-3xl font-bold text-amber-800">{totalSeats.first}</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-green-400/30 bg-gradient-to-br from-green-50/50 to-emerald-50/50 shadow-md">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-green-700">
+                  <FaChair /> Second Class Configuration
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="secondCarriages" className="text-green-700">Carriages</Label>
+                    <Input
+                      id="secondCarriages"
+                      type="number"
+                      min={1}
+                      max={50}
+                      value={form.second.carriages}
+                      onChange={(e) => setForm({ ...form, second: { ...form.second, carriages: onNum(e.target.value, 1, 50) } })}
+                      className="border-green-300 focus:border-green-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="secondRows" className="text-green-700">Rows</Label>
+                    <Input
+                      id="secondRows"
+                      type="number"
+                      min={1}
+                      max={26}
+                      value={form.second.rows}
+                      onChange={(e) => setForm({ ...form, second: { ...form.second, rows: onNum(e.target.value, 1, 26) } })}
+                      className="border-green-300 focus:border-green-500"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="secondCols" className="text-green-700">Seats per Row</Label>
+                  <Input
+                    id="secondCols"
+                    type="number"
+                    min={1}
+                    max={10}
+                    value={form.second.cols}
+                    onChange={(e) => setForm({ ...form, second: { ...form.second, cols: onNum(e.target.value, 1, 10) } })}
+                    className="border-green-300 focus:border-green-500"
+                  />
+                </div>
+                <Separator className="bg-green-200" />
+                <div className="bg-green-100 rounded-lg p-4 text-center">
+                  <p className="text-sm text-green-700 font-medium">Total Seats</p>
+                  <p className="text-3xl font-bold text-green-800">{totalSeats.second}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card className="border-primary/20 shadow-md bg-gradient-to-r from-primary/5 to-secondary/5">
+            <CardContent className="pt-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg px-6 py-4 border border-primary/20">
+                  <p className="text-sm font-medium text-muted-foreground mb-1">Grand Total Seats</p>
+                  <p className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    {totalSeats.all}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  <Button
+                    type="button"
+                    onClick={() => router.push("/booking")}
+                    variant="outline"
+                    className="border-primary/30 hover:bg-primary/10"
+                  >
+                    <FaArrowRight className="mr-2" /> Go to Booking
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90"
+                  >
+                    <FaPlus className="mr-2" /> {isSubmitting ? "Saving..." : "Add Train Schedule"}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {message && (
+            <Card className="border-green-500/50 bg-green-50">
+              <CardContent className="pt-6">
+                <p className="text-green-800 font-medium">{message}</p>
+              </CardContent>
+            </Card>
+          )}
+          {error && (
+            <Card className="border-red-500/50 bg-red-50">
+              <CardContent className="pt-6">
+                <p className="text-red-800 font-medium">{error}</p>
+              </CardContent>
+            </Card>
+          )}
+        </form>
+
+        <Card className="mt-8 border-primary/20 shadow-md">
+          <CardHeader>
+            <CardTitle className="text-2xl">Scheduled Trains</CardTitle>
+            <CardDescription>View and manage all scheduled train services</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
+                <p>Loading train schedules...</p>
+              </div>
+            ) : trains.length === 0 ? (
+              <div className="text-center py-12 border-2 border-dashed border-muted rounded-lg bg-muted/5">
+                <FaTrain className="mx-auto text-4xl text-muted-foreground/50 mb-4" />
+                <p className="text-muted-foreground text-lg font-medium">No trains scheduled yet</p>
+                <p className="text-muted-foreground/70 text-sm mt-2">Add your first train schedule above</p>
+              </div>
+            ) : (
+              <div className="rounded-lg border border-primary/10 overflow-hidden">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-primary/5">
+                      <TableHead>Train</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Departure</TableHead>
+                      <TableHead>Arrival</TableHead>
+                      <TableHead>Route</TableHead>
+                      <TableHead className="text-center">First Class</TableHead>
+                      <TableHead className="text-center">Second Class</TableHead>
+                      <TableHead className="text-center">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {trains.map((t) => (
+                      <TableRow key={t.id} className="hover:bg-muted/50">
+                        <TableCell className="font-medium">
+                          <Badge variant="outline" className="bg-primary/5 border-primary/30 text-primary">
+                            {t.trainName}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{t.date}</TableCell>
+                        <TableCell>{t.departureTime || '-'}</TableCell>
+                        <TableCell>{t.arrivalTime || '-'}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1 text-sm">
+                            <span>{t.startStation}</span>
+                            <FaArrowRight className="text-xs text-muted-foreground" />
+                            <span>{t.stopStation}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <Badge variant="secondary" className="bg-amber-100 text-amber-700 border-amber-300">
+                            {t.classes?.First?.capacity ?? '-'}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <Badge variant="secondary" className="bg-green-100 text-green-700 border-green-300">
+                            {t.classes?.Second?.capacity ?? '-'}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-center">
+                          <Button
+                            onClick={() => removeTrain(t.id)}
+                            disabled={removingId === t.id}
+                            variant="destructive"
+                            size="sm"
+                            className="gap-1"
+                          >
+                            <FaTrash /> {removingId === t.id ? "Removing..." : "Remove"}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
-    </div>
     </div>
   );
 }
-
