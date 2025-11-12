@@ -99,7 +99,7 @@ async function initializeDatabase() {
       console.log('   Tables:', tableNames.join(', '));
       
       // Check if we have all required tables
-      const requiredTables = ['users', 'bookings'];
+  const requiredTables = ['users', 'bookings', 'train_schedules', 'train_classes'];
       const missingTables = requiredTables.filter(t => !tableNames.includes(t));
       
       if (missingTables.length > 0) {
@@ -140,9 +140,9 @@ async function initializeDatabase() {
     }
 
     // Test connection using the same connection (not the pool)
-    console.log('🔌 Testing database connection...');
-    const [result] = await connection.query('SELECT COUNT(*) as count FROM trains');
-    console.log(`✅ Connection successful! Found ${result[0].count} trains in database.`);
+  console.log('🔌 Testing database connection...');
+  const [result] = await connection.query('SELECT COUNT(*) as count FROM train_schedules');
+  console.log(`✅ Connection successful! Found ${result[0].count} train schedules in database.`);
     
     // Now close the connection
     await connection.end();

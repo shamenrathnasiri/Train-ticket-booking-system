@@ -15,16 +15,16 @@ async function testDatabase() {
       console.log('   -', tableName);
     });
     
-    // Test 2: Check trains
-    const [trains] = await pool.query('SELECT * FROM trains');
-    console.log('\n✅ Trains found:', trains.length);
-    trains.forEach(t => {
-      console.log(`   - ${t.train_number}: ${t.train_name}`);
+    // Test 2: Check train schedules
+    const [trainSchedules] = await pool.query('SELECT * FROM train_schedules');
+    console.log('\n✅ Train schedules found:', trainSchedules.length);
+    trainSchedules.forEach(schedule => {
+      console.log(`   - ${schedule.train_name} on ${schedule.travel_date}`);
     });
-    
-    // Test 3: Check schedules
-    const [schedules] = await pool.query('SELECT COUNT(*) as count FROM schedules');
-    console.log('\n✅ Schedules found:', schedules[0].count);
+
+    // Test 3: Check class configurations
+    const [classConfigs] = await pool.query('SELECT COUNT(*) as count FROM train_classes');
+    console.log('\n✅ Class configurations found:', classConfigs[0].count);
     
     console.log('\n🎉 Database is working perfectly!');
     

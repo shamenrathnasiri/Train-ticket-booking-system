@@ -1,7 +1,21 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaPlus, FaArrowRight, FaTrash, FaStar, FaChair } from 'react-icons/fa';
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
+const SCHEDULES_ENDPOINT = `${API_BASE}/api/schedules`;
+
+const buildInitialForm = () => ({
+  trainName: "",
+  date: "",
+  departureTime: "",
+  arrivalTime: "",
+  startStation: "",
+  stopStation: "",
+  first: { carriages: 1, rows: 10, cols: 6 },
+  second: { carriages: 1, rows: 10, cols: 6 },
+});
 
 /**
  * Schedule page allows configuring a train with:
@@ -9,32 +23,42 @@ import { FaPlus, FaArrowRight, FaTrash, FaStar, FaChair } from 'react-icons/fa';
  * - First and Second class only
  * - Number of carriages per class
  * - Seats per carriage (rows x cols)
- * Stores the configuration to localStorage under key: TRAIN_SCHEDULE
+ * Persists the configuration via the schedules API so data is shared with the booking flow.
  */
 export default function Shedule() {
   const router = useRouter();
-  const [form, setForm] = useState({
-    trainName: "",
-    date: "",
-    departureTime: "", // HH:mm
-    arrivalTime: "", // HH:mm
-    startStation: "",
-    stopStation: "",
-    first: { carriages: 1, rows: 10, cols: 6 },
-    second: { carriages: 1, rows: 10, cols: 6 },
-  });
+  const [form, setForm] = useState(buildInitialForm);
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [trains, setTrains] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [removingId, setRemovingId] = useState(null);
+
+  const loadSchedules = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(SCHEDULES_ENDPOINT, { cache: "no-store" });
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message || "Failed to load train schedules.");
+      }
+      const payload = await response.json();
+      const list = Array.isArray(payload?.data) ? payload.data : [];
+      setTrains(list);
+      setError("");
+    } catch (err) {
+      console.error("Error loading schedules:", err);
+      setError(err.message || "Failed to load train schedules. Please try again.");
+      setTrains([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    // Load existing schedules list
-    try {
-      const listRaw = localStorage.getItem("TRAIN_SCHEDULES");
-      const list = listRaw ? JSON.parse(listRaw) : [];
-      const norm = Array.isArray(list) ? list : [];
-      setTrains(norm);
-    } catch {}
-  }, []);
+    loadSchedules();
+  }, [loadSchedules]);
 
   const totalSeats = useMemo(() => {
     const calc = (o) => Number(o.carriages || 0) * Number(o.rows || 0) * Number(o.cols || 0);
@@ -51,66 +75,87 @@ export default function Shedule() {
     return Math.max(min, Math.min(max, n));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
+    setError("");
 
     if (!form.trainName || !form.date || !form.startStation || !form.stopStation) {
-      setMessage("Please provide train name, date, start and stop stations.");
+      setError("Please provide train name, date, start and stop stations.");
       return;
     }
 
-    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-    const schedule = {
-      id,
+    const payload = {
       trainName: form.trainName,
       date: form.date,
       departureTime: form.departureTime || "",
       arrivalTime: form.arrivalTime || "",
       startStation: form.startStation,
       stopStation: form.stopStation,
-      classes: {
-        First: {
-          carriages: onNum(form.first.carriages, 1, 50),
-          rows: onNum(form.first.rows, 1, 26),
-          cols: onNum(form.first.cols, 1, 10),
-          capacity: totalSeats.first,
-        },
-        Second: {
-          carriages: onNum(form.second.carriages, 1, 50),
-          rows: onNum(form.second.rows, 1, 26),
-          cols: onNum(form.second.cols, 1, 10),
-          capacity: totalSeats.second,
-        },
+      first: {
+        carriages: onNum(form.first.carriages, 1, 50),
+        rows: onNum(form.first.rows, 1, 26),
+        cols: onNum(form.first.cols, 1, 10),
       },
-      // In a real app, availability would be per-trip from backend. For demo, empty.
-      unavailableSeats: {}, // e.g., { First: ["A1", ...], Second: ["B3", ...] }
+      second: {
+        carriages: onNum(form.second.carriages, 1, 50),
+        rows: onNum(form.second.rows, 1, 26),
+        cols: onNum(form.second.cols, 1, 10),
+      },
+      unavailableSeats: {},
     };
 
-    const next = [...trains, schedule];
-    localStorage.setItem("TRAIN_SCHEDULES", JSON.stringify(next));
-    setTrains(next);
-    setMessage("Train added to schedule. You can now proceed to booking.");
-    // Reset form after adding
-    setForm({
-      trainName: "",
-      date: "",
-      departureTime: "",
-      arrivalTime: "",
-      startStation: "",
-      stopStation: "",
-      first: { carriages: 1, rows: 10, cols: 6 },
-      second: { carriages: 1, rows: 10, cols: 6 },
-    });
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(SCHEDULES_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const contentType = response.headers.get("content-type") || "";
+        const bodyText = await response.text();
+        if (contentType.includes("application/json")) {
+          try {
+            const parsed = JSON.parse(bodyText);
+            throw new Error(parsed?.message || bodyText);
+          } catch (_) {
+            throw new Error(bodyText || "Failed to create schedule.");
+          }
+        }
+        throw new Error(bodyText || "Failed to create schedule.");
+      }
+
+      await loadSchedules();
+      setMessage("Train added to schedule. You can now proceed to booking.");
+      setForm(buildInitialForm());
+    } catch (err) {
+      console.error("Error creating schedule:", err);
+      setError(err.message || "Could not create train schedule. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const removeTrain = (id) => {
+  const removeTrain = async (id) => {
+    setMessage("");
+    setError("");
+    setRemovingId(id);
     try {
-      const next = trains.filter((t) => t.id !== id);
-      setTrains(next);
-      localStorage.setItem("TRAIN_SCHEDULES", JSON.stringify(next));
+      const response = await fetch(`${SCHEDULES_ENDPOINT}/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        const bodyText = await response.text();
+        throw new Error(bodyText || "Failed to remove schedule.");
+      }
+      setTrains((prev) => prev.filter((t) => t.id !== id));
     } catch (e) {
-      console.error('Error removing train:', e);
+      console.error("Error removing train:", e);
+      setError(e.message || "Failed to remove schedule. Please try again.");
+    } finally {
+      setRemovingId(null);
     }
   };
 
@@ -321,9 +366,10 @@ export default function Shedule() {
                     </button>
                     <button
                       type="submit"
-                      className="px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors inline-flex items-center gap-2"
+                      disabled={isSubmitting}
+                      className="px-6 py-3 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors inline-flex items-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                     >
-                      <FaPlus /> Add Train Schedule
+                      <FaPlus /> {isSubmitting ? "Saving..." : "Add Train Schedule"}
                     </button>
                   </div>
                 </div>
@@ -334,12 +380,21 @@ export default function Shedule() {
                   {message}
                 </div>
               )}
+              {error && (
+                <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 font-medium" role="alert">
+                  {error}
+                </div>
+              )}
             </form>
 
             {/* Scheduled Trains Table */}
             <div className="mt-12">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Scheduled Trains</h2>
-              {trains.length === 0 ? (
+              {loading ? (
+                <div className="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 text-gray-500 text-lg">
+                  Loading train schedules...
+                </div>
+              ) : trains.length === 0 ? (
                 <div className="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
                   <p className="text-gray-500 text-lg">No trains scheduled yet.</p>
                   <p className="text-gray-400 text-sm mt-2">Add your first train schedule above.</p>
@@ -372,9 +427,10 @@ export default function Shedule() {
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button
                               onClick={() => removeTrain(t.id)}
+                              disabled={removingId === t.id}
                               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium bg-red-100 text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
                             >
-                              <FaTrash /> Remove
+                              <FaTrash /> {removingId === t.id ? "Removing..." : "Remove"}
                             </button>
                           </td>
                         </tr>

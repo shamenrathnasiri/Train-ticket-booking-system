@@ -3,9 +3,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import SeatSelector from "@/components/SeatSelector";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
+const SCHEDULES_ENDPOINT = `${API_BASE}/api/schedules`;
+
 export default function Booking() {
   const router = useRouter();
-  const [schedules, setSchedules] = useState([]); // all from storage
+  const [schedules, setSchedules] = useState([]); // fetched from API
   const [upcoming, setUpcoming] = useState([]); // filtered
   const [selectedTrainId, setSelectedTrainId] = useState("");
   const [formData, setFormData] = useState({
@@ -23,6 +26,8 @@ export default function Booking() {
   const [error, setError] = useState("");
   const [schedule, setSchedule] = useState(null);
   const [carriageIndex, setCarriageIndex] = useState(1); // 1-based index
+  const [loadingSchedules, setLoadingSchedules] = useState(true);
+  const [schedulesError, setSchedulesError] = useState("");
 
   // Helpers to parse and filter schedules by time
   const toDateTime = (dateStr, timeStr) => {
@@ -39,17 +44,60 @@ export default function Booking() {
     return dt.getTime() >= Date.now();
   };
 
-  // Load schedules from localStorage if available
   useEffect(() => {
-    try {
-      const listRaw = localStorage.getItem("TRAIN_SCHEDULES");
-      const list = listRaw ? JSON.parse(listRaw) : [];
-      const norm = Array.isArray(list) ? list : [];
-      setSchedules(norm);
-      const ups = norm.filter(isUpcoming);
-      setUpcoming(ups);
-    } catch {}
+    const controller = new AbortController();
+
+    const loadSchedules = async () => {
+      setLoadingSchedules(true);
+      try {
+        const response = await fetch(SCHEDULES_ENDPOINT, {
+          cache: "no-store",
+          signal: controller.signal,
+        });
+        if (!response.ok) {
+          const message = await response.text();
+          throw new Error(message || "Failed to load schedules.");
+        }
+        const payload = await response.json();
+        const list = Array.isArray(payload?.data) ? payload.data : [];
+        const normalized = list.map((item) => ({
+          ...item,
+          id: String(item.id),
+          classes: item.classes || {},
+          unavailableSeats: item.unavailableSeats || {},
+        }));
+        setSchedules(normalized);
+        setSchedulesError("");
+      } catch (err) {
+        if (err.name === "AbortError") return;
+        console.error("Error loading schedules:", err);
+        setSchedules([]);
+        setSchedulesError(err.message || "Failed to load schedules. Please try again.");
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoadingSchedules(false);
+        }
+      }
+    };
+
+    loadSchedules();
+    return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    const upcomingList = schedules.filter(isUpcoming);
+    setUpcoming(upcomingList);
+  }, [schedules]);
+
+  useEffect(() => {
+    if (!selectedTrainId) return;
+    const exists = schedules.some((t) => t.id === selectedTrainId);
+    if (!exists) {
+      setSelectedTrainId("");
+      setSchedule(null);
+      setSelectedSeats([]);
+    }
+  }, [schedules, selectedTrainId]);
 
   // Clamp ticket count to available capacity when class or schedule changes
   useEffect(() => {
@@ -106,9 +154,29 @@ export default function Booking() {
     if (found) {
       // Clamp rows to A-Z
       const clampRows = (n) => Math.max(1, Math.min(Number(n || 1), 26));
-      if (found?.classes?.First) found.classes.First.rows = clampRows(found.classes.First.rows);
-      if (found?.classes?.Second) found.classes.Second.rows = clampRows(found.classes.Second.rows);
-      setSchedule(found);
+      const normalized = {
+        ...found,
+        classes: {
+          ...(found.classes || {}),
+          ...(found.classes?.First
+            ? {
+                First: {
+                  ...found.classes.First,
+                  rows: clampRows(found.classes.First.rows),
+                },
+              }
+            : {}),
+          ...(found.classes?.Second
+            ? {
+                Second: {
+                  ...found.classes.Second,
+                  rows: clampRows(found.classes.Second.rows),
+                },
+              }
+            : {}),
+        },
+      };
+      setSchedule(normalized);
       setCarriageIndex(1);
       setSelectedSeats([]);
       setFormData((prev) => ({
@@ -222,12 +290,22 @@ export default function Booking() {
       
       <h1 className="text-5xl font-bold mb-6 text-center shadow-2xl text-white animate-fade-in">Train Ticket Booking</h1>
 
-      {upcoming.length === 0 && (
+      {loadingSchedules ? (
+        <div className="bg-sky-50/30 border border-sky-200/30 rounded-lg p-4 mb-6 backdrop-blur-sm">
+          <h3 className="text-lg font-semibold text-white">Loading Train Schedules</h3>
+          <p className="text-sky-100">Please wait while we fetch the latest train schedules.</p>
+        </div>
+      ) : schedulesError ? (
+        <div className="bg-red-50/30 border border-red-200/40 rounded-lg p-4 mb-6 backdrop-blur-sm">
+          <h3 className="text-lg font-semibold text-red-200">Unable to Load Schedules</h3>
+          <p className="text-red-100">{schedulesError}</p>
+        </div>
+      ) : upcoming.length === 0 ? (
         <div className="bg-amber-50/30 border border-amber-200/30 rounded-lg p-4 mb-6 backdrop-blur-sm">
           <h3 className="text-lg font-semibold text-amber-100">No Trains Available</h3>
           <p className="text-amber-200">There are no upcoming trains scheduled. Please visit the <a href="/shedule" className="underline hover:text-amber-300">Schedule page</a> to add train schedules before booking tickets.</p>
         </div>
-      )}
+      ) : null}
 
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -240,8 +318,11 @@ export default function Booking() {
                 className="w-full rounded-md border border-white/30 bg-transparent text-white p-2 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/50 transition-all duration-200 hover:border-white/40"
                 value={selectedTrainId}
                 onChange={handleTrainChange}
+                disabled={loadingSchedules || upcoming.length === 0}
               >
-                {upcoming.length === 0 ? (
+                {loadingSchedules ? (
+                  <option value="" style={{color: '#000'}}>Loading trains...</option>
+                ) : upcoming.length === 0 ? (
                   <option value="" style={{color: '#000'}}>No upcoming trains available</option>
                 ) : (
                   <option value="" style={{color: '#000'}}>Select a train</option>
