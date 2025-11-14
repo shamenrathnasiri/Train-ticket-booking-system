@@ -188,10 +188,10 @@ export default function Shedule() {
                   <FaTrain className="text-5xl text-white" />
                 </div>
               </div>
-              <CardTitle className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+              <CardTitle className="text-4xl font-extrabold bg-gradient-to-r from-green-700 via-green-600 to-blue-800 bg-clip-text text-transparent mb-2">
                 Train Schedule Management
               </CardTitle>
-              <CardDescription className="text-lg text-gray-600">
+              <CardDescription className="text-lg text-green-800">
                 Create and manage train schedules with detailed seat configurations
               </CardDescription>
             </CardHeader>
