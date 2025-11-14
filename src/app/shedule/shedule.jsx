@@ -167,28 +167,31 @@ export default function Shedule() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-green-50 to-blue-100">
-      <div className="container mx-auto py-8 px-4 max-w-7xl">
-        <div className="mb-6">
+    <div className="min-h-screen bg-[url('/images/bg2-booking.jpg')] bg-cover bg-center bg-fixed bg-no-repeat relative">
+      {/* Backdrop overlay with blur effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-blue-900/30 to-black/40 backdrop-blur-[2px]" />
+      
+      <div className="relative container mx-auto py-8 px-4 max-w-7xl min-h-screen">
+        <div className="mb-8 space-y-4">
           <Button 
             variant="outline" 
             onClick={() => router.push("/")}
-            className="mb-4 border-primary/20 hover:bg-primary/5"
+            className="mb-4 border-white/30 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-white/50 text-white transition-all duration-300 shadow-lg"
           >
-            â† Back to Home
+            Back to Home
           </Button>
           
-          <Card className="border-primary/20 shadow-lg bg-gradient-to-r from-primary/5 to-secondary/5">
-            <CardHeader className="text-center pb-4">
-              <div className="flex justify-center mb-3">
-                <div className="p-3 bg-primary/10 rounded-full">
-                  <FaTrain className="text-4xl text-primary" />
+          <Card className="border-white/20 shadow-2xl bg-white/95 backdrop-blur-xl">
+            <CardHeader className="text-center pb-6 pt-8">
+              <div className="flex justify-center mb-4">
+                <div className="p-4 bg-green-800 rounded-2xl shadow-xl">
+                  <FaTrain className="text-5xl text-white" />
                 </div>
               </div>
-              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <CardTitle className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
                 Train Schedule Management
               </CardTitle>
-              <CardDescription className="text-base">
+              <CardDescription className="text-lg text-gray-600">
                 Create and manage train schedules with detailed seat configurations
               </CardDescription>
             </CardHeader>
@@ -196,10 +199,13 @@ export default function Shedule() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <Card className="border-primary/20 shadow-md">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-primary">
-                <FaTrain /> Train Details
+          <Card className="border-white/20 shadow-2xl bg-white/95 backdrop-blur-xl">
+            <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-gray-800">
+                <div className="p-2 bg-blue-500 rounded-lg">
+                  <FaTrain className="text-white" />
+                </div>
+                Train Details
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -291,10 +297,13 @@ export default function Shedule() {
           </Card>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="border-amber-400/30 bg-gradient-to-br from-amber-50/50 to-yellow-50/50 shadow-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-amber-700">
-                  <FaStar /> First Class Configuration
+            <Card className="border-white/30 bg-white/95 backdrop-blur-xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
+              <CardHeader className="bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 border-b border-amber-200">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-amber-800">
+                  <div className="p-2 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-lg shadow-lg">
+                    <FaStar className="text-white" />
+                  </div>
+                  First Class Configuration
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -344,10 +353,13 @@ export default function Shedule() {
               </CardContent>
             </Card>
 
-            <Card className="border-green-400/30 bg-gradient-to-br from-green-50/50 to-emerald-50/50 shadow-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-700">
-                  <FaChair /> Second Class Configuration
+            <Card className="border-white/30 bg-white/95 backdrop-blur-xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-[1.02]">
+              <CardHeader className="bg-gradient-to-br from-green-50 via-emerald-50 to-green-100 border-b border-green-200">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-green-800">
+                  <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg shadow-lg">
+                    <FaChair className="text-white" />
+                  </div>
+                  Second Class Configuration
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -398,28 +410,28 @@ export default function Shedule() {
             </Card>
           </div>
 
-          <Card className="border-primary/20 shadow-md bg-gradient-to-r from-primary/5 to-secondary/5">
+          <Card className="border-white/30 shadow-2xl bg-white/95 backdrop-blur-xl">
             <CardContent className="pt-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg px-6 py-4 border border-primary/20">
-                  <p className="text-sm font-medium text-muted-foreground mb-1">Grand Total Seats</p>
-                  <p className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                <div className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl px-8 py-6 shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                  <p className="text-sm font-semibold text-white/90 mb-2">Grand Total Seats</p>
+                  <p className="text-5xl font-extrabold text-white drop-shadow-lg">
                     {totalSeats.all}
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-4">
                   <Button
                     type="button"
                     onClick={() => router.push("/booking")}
                     variant="outline"
-                    className="border-primary/30 hover:bg-primary/10"
+                    className="border-blue-300 bg-white hover:bg-blue-50 hover:border-blue-500 text-blue-700 font-semibold px-6 py-6 text-base shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <FaArrowRight className="mr-2" /> Go to Booking
                   </Button>
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90"
+                    className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold px-8 py-6 text-base shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
                   >
                     <FaPlus className="mr-2" /> {isSubmitting ? "Saving..." : "Add Train Schedule"}
                   </Button>
@@ -429,25 +441,25 @@ export default function Shedule() {
           </Card>
 
           {message && (
-            <Card className="border-green-500/50 bg-green-50">
+            <Card className="border-green-300 bg-gradient-to-r from-green-50 to-emerald-50 shadow-xl backdrop-blur-lg animate-in fade-in slide-in-from-top-2 duration-500">
               <CardContent className="pt-6">
-                <p className="text-green-800 font-medium">{message}</p>
+                <p className="text-green-800 font-semibold text-lg">{message}</p>
               </CardContent>
             </Card>
           )}
           {error && (
-            <Card className="border-red-500/50 bg-red-50">
+            <Card className="border-red-300 bg-gradient-to-r from-red-50 to-pink-50 shadow-xl backdrop-blur-lg animate-in fade-in slide-in-from-top-2 duration-500">
               <CardContent className="pt-6">
-                <p className="text-red-800 font-medium">{error}</p>
+                <p className="text-red-800 font-semibold text-lg">{error}</p>
               </CardContent>
             </Card>
           )}
         </form>
 
-        <Card className="mt-8 border-primary/20 shadow-md">
-          <CardHeader>
-            <CardTitle className="text-2xl">Scheduled Trains</CardTitle>
-            <CardDescription>View and manage all scheduled train services</CardDescription>
+        <Card className="mt-8 border-white/30 shadow-2xl bg-white/95 backdrop-blur-xl">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 border-b border-gray-200">
+            <CardTitle className="text-3xl font-bold text-gray-800">Scheduled Trains</CardTitle>
+            <CardDescription className="text-base text-gray-600">View and manage all scheduled train services</CardDescription>
           </CardHeader>
           <CardContent>
             {loading ? (

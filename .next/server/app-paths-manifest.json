@@ -1,6 +1,7 @@
 {
   "/api/schedules/route": "app/api/schedules/route.js",
-  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/shedule/page": "app/shedule/page.js",
   "/page": "app/page.js",
-  "/shedule/page": "app/shedule/page.js"
+  "/signin/page": "app/signin/page.js"
 }
